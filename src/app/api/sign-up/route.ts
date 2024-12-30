@@ -40,6 +40,7 @@ export async function POST(req: Request): Promise<NextResponse> {
                 existingUserVerifiedByEmail.verifyCodeExpiry = new Date(
                     Date.now() + 3600000
                 ); //ms
+                existingUserVerifiedByEmail.username = username
                 await existingUserVerifiedByEmail.save();
             }
         } else {
