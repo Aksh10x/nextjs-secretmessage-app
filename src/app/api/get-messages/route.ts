@@ -26,7 +26,7 @@ export async function GET(request: Request){
         const getUser = await UserModel.aggregate([
             {
                 $match: {
-                    id: userId
+                    _id: userId
                 }
             },
             {
@@ -37,12 +37,16 @@ export async function GET(request: Request){
             },
             {
                 $project: {
-                    id: 1,
-                    messages: 1
+                    _id: 0,
+                    messages: {
+                        content: 1,
+                        createdAt: 1
+                    }
                 }
             }
         ])
 
+        
 
         if(!getUser || getUser.length === 0){
             return NextResponse.json({

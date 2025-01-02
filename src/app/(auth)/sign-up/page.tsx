@@ -13,8 +13,8 @@ import axios, { AxiosError } from "axios"
 import { ApiResponse } from "@/types/ApiResponse";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input"
-import { Button } from "@react-email/components";
 import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 
 
@@ -67,6 +67,7 @@ const SignUp = () => {
   },[username])
 
   const onSubmit = async(data : z.infer<typeof signupSchema>) => {
+    
     setIsSubmitting(true)
     try {
       const response = await axios.post("/api/sign-up", data)
@@ -89,6 +90,7 @@ const SignUp = () => {
     }
   }
 
+  
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-[28vw] bg-white p-6 rounded-lg shadow-2xl min-h-[450px] border-yellow-300 border-2">
@@ -137,7 +139,7 @@ const SignUp = () => {
               name="password"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input placeholder="Password" {...field} className="bg-white"/>
                   </FormControl>
@@ -146,17 +148,22 @@ const SignUp = () => {
               )}
             />
 
-            <Button type="submit" aria-disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting} className="font-bold">
               {
                 isSubmitting ? (
                   <Loader2 className="animate-spin"/>
-                ) : (<div  className="cursor-pointer bg-yellow-300 px-2 py-3 rounded-lg text-white font-bold shadow-2xl">Sign-up</div>)
+                ) : ("Sign-up")
               }
             </Button>
 
           </form>
         </Form>
-
+        <div className="flex justify-center items-center  text-sm">
+          <span className=" flex ">
+            <p>Already have an account?</p>
+            <Link href={"/sign-in"} className="text-blue-500">Sign-in</Link>
+          </span>
+        </div>
       </div>
     </div>
     );
